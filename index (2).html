@@ -1,0 +1,1768 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>余白のうた / Yohaku no Uta — Music born from moods, landscapes, and emotions</title>
+<meta name="description" content="好きな音楽を、自由に形にしているチャンネル。和風ダークファンタジー × シネマティックなオリジナル楽曲。" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --bg-0:#080c18;
+    --bg-1:#0f1626;
+    --bg-2:#161028;
+    --silver:#c8d0e0;
+    --silver-dim:rgba(200,208,224,.55);
+    --indigo:#5b4d8a;
+    --indigo-soft:rgba(91,77,138,.35);
+    --gold:#c9a84c;
+    --gold-warm:#e6c574;
+    --text:#eef0f7;
+    --text-dim:rgba(238,240,247,.65);
+    --text-faint:rgba(238,240,247,.4);
+    --teal:#2d7d7a;
+    --hairline:rgba(200,208,224,.12);
+    --hairline-strong:rgba(200,208,224,.22);
+
+    --serif-jp:"Shippori Mincho","Noto Serif JP",serif;
+    --serif-en:"Cormorant Garamond","EB Garamond",serif;
+    --sans-jp:"Noto Sans JP",sans-serif;
+    --sans-en:"Inter",sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans-jp),var(--sans-en);
+    color:var(--text);
+    background:var(--bg-0);
+    min-height:100vh;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;text-decoration:none}
+  img,iframe{max-width:100%;display:block}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+  /* ----- Page-wide ambient gradient backdrop ----- */
+  .page{
+    position:relative;
+    background:
+      radial-gradient(1200px 800px at 80% -10%, rgba(91,77,138,.25), transparent 60%),
+      radial-gradient(900px 700px at 10% 20%, rgba(45,125,122,.10), transparent 65%),
+      radial-gradient(1100px 900px at 50% 100%, rgba(22,16,40,.9), transparent 70%),
+      linear-gradient(180deg,var(--bg-0) 0%, var(--bg-1) 45%, var(--bg-2) 100%);
+    overflow:hidden;
+  }
+
+  /* ============================================================
+     NAV (minimal floating)
+     ============================================================ */
+  .nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 40px;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    background:linear-gradient(180deg, rgba(8,12,24,.6), rgba(8,12,24,0));
+    transition:background .4s ease;
+  }
+  .nav.scrolled{
+    background:rgba(8,12,24,.72);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav-brand{
+    display:flex;align-items:center;gap:14px;
+    font-family:var(--serif-jp);
+    font-size:18px;
+    letter-spacing:.18em;
+    font-weight:500;
+  }
+  .brand-mark{
+    width:34px;height:34px;
+    display:block;
+    flex:none;
+    transition:transform .8s cubic-bezier(.2,.7,.2,1), filter .6s;
+  }
+  .nav-brand:hover .brand-mark{
+    transform:rotate(-6deg);
+    filter:drop-shadow(0 0 10px rgba(201,168,76,.45));
+  }
+  .brand-mark .moonbody{stroke:var(--silver);stroke-width:1;fill:none;opacity:.9}
+  .brand-mark .halo{stroke:var(--silver);stroke-width:.6;fill:none;opacity:.35}
+  .brand-mark .water{stroke:var(--silver);stroke-width:.6;fill:none;opacity:.55;stroke-linecap:round}
+  .brand-mark .water-soft{stroke:var(--silver);stroke-width:.4;fill:none;opacity:.25;stroke-linecap:round}
+  .brand-mark .ember{fill:var(--gold-warm);filter:drop-shadow(0 0 3px var(--gold))}
+  .brand-mark .ember-soft{fill:var(--silver);opacity:.7}
+
+  /* footer + larger uses */
+  .brand-mark.lg{width:44px;height:44px}
+  .nav-links{
+    display:flex;gap:32px;
+    font-family:var(--sans-en);
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+  }
+  .nav-links a{transition:color .3s}
+  .nav-links a:hover{color:var(--gold-warm)}
+  @media(max-width:720px){
+    .nav{padding:18px 22px}
+    .nav-links{display:none}
+  }
+
+  /* ----- Hamburger toggle (mobile only) ----- */
+  .nav-toggle{
+    display:none;
+    width:40px;height:40px;
+    border:1px solid var(--silver-dim);
+    background:rgba(238,240,247,.02);
+    border-radius:50%;
+    cursor:pointer;
+    position:relative;
+    flex:none;
+    transition:border-color .3s, background .3s;
+  }
+  .nav-toggle:hover{border-color:var(--silver);background:rgba(238,240,247,.06)}
+  .nav-toggle .bar{
+    display:block;
+    width:16px;height:1px;
+    background:var(--silver);
+    position:absolute;left:50%;
+    transition:transform .45s cubic-bezier(.7,0,.3,1), opacity .3s, top .45s cubic-bezier(.7,0,.3,1);
+  }
+  .nav-toggle .bar:nth-child(1){top:14px;transform:translateX(-50%)}
+  .nav-toggle .bar:nth-child(2){top:19.5px;transform:translateX(-50%)}
+  .nav-toggle .bar:nth-child(3){top:25px;transform:translateX(-50%)}
+  body.menu-open .nav-toggle .bar:nth-child(1){top:19.5px;transform:translateX(-50%) rotate(45deg)}
+  body.menu-open .nav-toggle .bar:nth-child(2){opacity:0}
+  body.menu-open .nav-toggle .bar:nth-child(3){top:19.5px;transform:translateX(-50%) rotate(-45deg)}
+  body.menu-open .nav-toggle{border-color:var(--gold-warm)}
+  body.menu-open .nav-toggle .bar{background:var(--gold-warm)}
+  @media(max-width:720px){
+    .nav-toggle{display:block}
+  }
+
+  /* ----- Mobile overlay menu ----- */
+  .nav-overlay{
+    position:fixed;inset:0;
+    z-index:45;
+    background:rgba(8,12,24,.96);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    opacity:0;pointer-events:none;
+    transition:opacity .5s ease;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:96px 24px 48px;
+    overflow-y:auto;
+  }
+  body.menu-open .nav-overlay{opacity:1;pointer-events:auto}
+  body.menu-open{overflow:hidden}
+
+  .nav-overlay-list{
+    display:flex;flex-direction:column;align-items:center;gap:30px;
+    margin-bottom:48px;
+  }
+  .nav-overlay-link{
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    font-family:var(--serif-jp);
+    font-size:30px;
+    font-weight:500;
+    letter-spacing:.1em;
+    color:var(--text);
+    transform:translateY(20px);opacity:0;
+    transition:transform .55s cubic-bezier(.2,.7,.2,1), opacity .55s ease, color .3s;
+    padding:6px 0;
+  }
+  .nav-overlay-link:hover,.nav-overlay-link:focus{color:var(--gold-warm)}
+  .nav-overlay-link small{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:12px;
+    color:var(--silver-dim);
+    letter-spacing:.24em;
+    text-transform:uppercase;
+  }
+  body.menu-open .nav-overlay-link{transform:none;opacity:1}
+  body.menu-open .nav-overlay-link:nth-child(1){transition-delay:.08s}
+  body.menu-open .nav-overlay-link:nth-child(2){transition-delay:.14s}
+  body.menu-open .nav-overlay-link:nth-child(3){transition-delay:.20s}
+  body.menu-open .nav-overlay-link:nth-child(4){transition-delay:.26s}
+
+  .nav-overlay-rule{
+    width:48px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--silver-dim),transparent);
+    margin:0 0 36px;
+    opacity:0;transition:opacity .5s .35s;
+  }
+  body.menu-open .nav-overlay-rule{opacity:1}
+
+  .nav-overlay-cta{
+    display:flex;flex-direction:column;gap:12px;
+    width:100%;max-width:280px;
+    opacity:0;transform:translateY(16px);
+    transition:transform .55s cubic-bezier(.2,.7,.2,1) .4s, opacity .55s .4s;
+  }
+  body.menu-open .nav-overlay-cta{opacity:1;transform:none}
+  .nav-overlay-cta .btn{justify-content:center;width:100%}
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:140px 24px 80px;
+    isolation:isolate;
+  }
+  /* starfield canvas */
+  #stars{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    z-index:0;
+  }
+  /* moon halo */
+  .moon{
+    position:absolute;
+    top:14%; right:12%;
+    width:min(36vw,420px);
+    aspect-ratio:1/1;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 35%, rgba(238,240,247,.12), rgba(238,240,247,.04) 40%, transparent 70%),
+      radial-gradient(circle, rgba(200,208,224,.18), rgba(200,208,224,0) 60%);
+    filter:blur(2px);
+    z-index:0;
+    animation:moonDrift 24s ease-in-out infinite alternate;
+  }
+  @keyframes moonDrift{
+    from{transform:translate(0,0)}
+    to{transform:translate(-20px,18px)}
+  }
+  /* fog layers */
+  .fog{
+    position:absolute;left:0;right:0;bottom:0;
+    height:40%;
+    background:
+      radial-gradient(ellipse at 30% 100%, rgba(91,77,138,.25), transparent 60%),
+      radial-gradient(ellipse at 70% 100%, rgba(45,125,122,.15), transparent 60%);
+    z-index:0;
+    pointer-events:none;
+  }
+  /* tree silhouette */
+  .horizon{
+    position:absolute;left:0;right:0;bottom:0;height:24%;
+    background:
+      linear-gradient(180deg, transparent, rgba(8,12,24,.6) 40%, rgba(8,12,24,.95));
+    z-index:1;
+    pointer-events:none;
+  }
+
+  .hero-inner{
+    position:relative; z-index:2;
+    text-align:center;
+    max-width:900px;
+  }
+  .hero-tag{
+    font-family:var(--sans-en);
+    font-size:11px;
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:var(--silver-dim);
+    margin-bottom:34px;
+    display:inline-flex;align-items:center;gap:14px;
+  }
+  .hero-tag::before,.hero-tag::after{
+    content:""; height:1px; width:40px;
+    background:linear-gradient(90deg,transparent,var(--silver-dim),transparent);
+  }
+  .hero-title{
+    font-family:var(--serif-jp);
+    font-weight:500;
+    font-size:clamp(44px, 12vw, 148px);
+    letter-spacing:.1em;
+    line-height:1.05;
+    color:var(--text);
+    text-shadow:0 0 60px rgba(200,208,224,.15);
+    max-width:100%;
+  }
+  .hero-title .char{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(28px);
+    animation:charIn 1.2s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  @keyframes charIn{to{opacity:1;transform:none}}
+  .hero-en{
+    margin-top:18px;
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:clamp(18px, 2.4vw, 30px);
+    letter-spacing:.24em;
+    color:var(--silver);
+    opacity:0;
+    animation:fadeUp 1.4s ease .9s forwards;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none}}
+
+  .hero-divider{
+    margin:42px auto 36px;
+    width:1px;height:64px;
+    background:linear-gradient(180deg,transparent,var(--silver-dim),transparent);
+    opacity:0; animation:fadeUp 1.4s ease 1.1s forwards;
+  }
+
+  .hero-tagline{
+    font-family:var(--serif-jp);
+    font-size:clamp(17px, 2.2vw, 24px);
+    letter-spacing:.16em;
+    color:var(--text);
+    opacity:0; animation:fadeUp 1.4s ease 1.3s forwards;
+  }
+  .hero-tagline-en{
+    margin-top:14px;
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-size:clamp(14px,1.4vw,18px);
+    letter-spacing:.14em;
+    color:var(--text-dim);
+    opacity:0; animation:fadeUp 1.4s ease 1.5s forwards;
+  }
+
+  .hero-cta-wrap{
+    margin-top:56px;
+    display:flex;flex-direction:column;align-items:center;gap:18px;
+    opacity:0; animation:fadeUp 1.4s ease 1.7s forwards;
+  }
+
+  /* ----- Buttons ----- */
+  .btn{
+    display:inline-flex;align-items:center;gap:12px;
+    padding:18px 38px;
+    font-family:var(--sans-jp);
+    font-size:14px;
+    letter-spacing:.22em;
+    border-radius:2px;
+    transition:all .5s cubic-bezier(.2,.7,.2,1);
+    position:relative;
+  }
+  .btn-primary{
+    background:linear-gradient(180deg, var(--gold-warm), var(--gold));
+    color:#1a1408;
+    font-weight:600;
+    box-shadow:
+      0 0 0 1px rgba(201,168,76,.4),
+      0 14px 40px -16px rgba(201,168,76,.5);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:
+      0 0 0 1px rgba(230,197,116,.6),
+      0 0 60px rgba(201,168,76,.55),
+      0 22px 50px -18px rgba(201,168,76,.7);
+  }
+  .btn-primary .arrow{transition:transform .5s}
+  .btn-primary:hover .arrow{transform:translateX(4px)}
+
+  .btn-ghost{
+    border:1px solid var(--silver-dim);
+    color:var(--text);
+    background:rgba(238,240,247,.02);
+  }
+  .btn-ghost:hover{
+    border-color:var(--silver);
+    background:rgba(238,240,247,.06);
+    box-shadow:0 0 30px rgba(200,208,224,.2);
+  }
+
+  .btn-disabled{
+    border:1px solid rgba(200,208,224,.18);
+    color:rgba(238,240,247,.32);
+    cursor:not-allowed;
+    background:rgba(238,240,247,.02);
+  }
+  .btn-disabled:hover{transform:none;box-shadow:none}
+
+  /* ============================================================
+     LISTEN ANYWHERE (streaming platforms)
+     ============================================================ */
+  .platforms{
+    margin-top:64px;
+    padding:48px 40px;
+    border:1px solid var(--hairline);
+    background:
+      linear-gradient(180deg, rgba(45,125,122,.06), rgba(91,77,138,.06));
+    border-radius:2px;
+    text-align:center;
+  }
+  .platforms-eyebrow{
+    font-family:var(--sans-en);
+    font-size:11px;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:18px;
+    display:inline-flex;align-items:center;gap:14px;
+  }
+  .platforms-eyebrow::before,.platforms-eyebrow::after{
+    content:""; height:1px; width:32px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .platforms-title{
+    font-family:var(--serif-jp);
+    font-weight:500;
+    font-size:clamp(22px,2.6vw,30px);
+    letter-spacing:.12em;
+    line-height:1.5;
+  }
+  .platforms-title-en{
+    margin-top:8px;
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:16px;
+    color:var(--silver);
+    letter-spacing:.12em;
+  }
+  .platforms-list{
+    margin-top:32px;
+    display:flex;flex-wrap:wrap;justify-content:center;
+    gap:10px 14px;
+    max-width:780px;
+    margin-left:auto;margin-right:auto;
+  }
+  .platform-pill{
+    font-family:var(--sans-en);
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    padding:9px 16px;
+    border:1px solid var(--hairline-strong);
+    border-radius:999px;
+    background:rgba(238,240,247,.02);
+    transition:all .4s;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  a.platform-pill:hover{
+    color:var(--text);
+    border-color:var(--gold);
+    background:rgba(201,168,76,.08);
+    box-shadow:0 0 24px rgba(201,168,76,.2);
+    transform:translateY(-1px);
+  }
+  a.platform-pill::after{
+    content:"↗";
+    font-size:10px;
+    opacity:.5;
+    transition:all .4s;
+  }
+  a.platform-pill:hover::after{opacity:1;color:var(--gold-warm)}
+
+  /* ============================================================
+     TRACKS BRIDGE (subtle nudge to streaming after preview)
+     ============================================================ */
+  .tracks-bridge{
+    margin-top:64px;
+    padding-top:36px;
+    border-top:1px solid var(--hairline);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+    text-align:center;
+  }
+  .tracks-bridge-text{
+    font-family:var(--serif-jp);
+    font-size:16px;
+    line-height:2;
+    letter-spacing:.08em;
+    color:var(--text-dim);
+    max-width:64ch;
+  }
+  .tracks-bridge-text .accent{
+    color:var(--gold-warm);
+    border-bottom:1px solid rgba(201,168,76,.4);
+    padding-bottom:1px;
+    transition:all .3s;
+  }
+  .tracks-bridge-text .accent:hover{
+    color:var(--gold);
+    border-bottom-color:var(--gold);
+  }
+  .tracks-bridge-en{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:14px;
+    color:var(--text-faint);
+    letter-spacing:.06em;
+  }
+  .platform-pill.more{
+    color:var(--gold-warm);
+    border-color:rgba(201,168,76,.4);
+    background:rgba(201,168,76,.06);
+  }
+  .platforms-footnote{
+    margin-top:24px;
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:13px;
+    color:var(--text-faint);
+    letter-spacing:.08em;
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:36px;left:50%;transform:translateX(-50%);
+    z-index:3;
+    font-family:var(--sans-en);
+    font-size:10px;letter-spacing:.4em;text-transform:uppercase;
+    color:var(--text-faint);
+    display:flex;flex-direction:column;align-items:center;gap:14px;
+    opacity:0;animation:fadeUp 1.4s ease 2s forwards;
+  }
+  .scroll-cue .line{
+    width:1px;height:48px;
+    background:linear-gradient(180deg,var(--silver-dim),transparent);
+    animation:lineFlow 2.4s ease-in-out infinite;
+  }
+  @keyframes lineFlow{
+    0%{transform:scaleY(0);transform-origin:top}
+    50%{transform:scaleY(1);transform-origin:top}
+    51%{transform-origin:bottom}
+    100%{transform:scaleY(0);transform-origin:bottom}
+  }
+
+  /* ============================================================
+     SECTION GENERAL
+     ============================================================ */
+  section.block{
+    position:relative;
+    padding:140px 40px;
+    max-width:1280px;
+    margin:0 auto;
+  }
+  @media(max-width:720px){
+    section.block{padding:96px 22px}
+  }
+
+  .section-head{
+    display:flex;align-items:baseline;gap:24px;
+    margin-bottom:72px;
+    flex-wrap:wrap;
+  }
+  .section-num{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:18px;
+    color:var(--gold);
+    letter-spacing:.2em;
+  }
+  .section-title-jp{
+    font-family:var(--serif-jp);
+    font-weight:500;
+    font-size:clamp(34px,4.4vw,52px);
+    letter-spacing:.14em;
+    line-height:1.2;
+  }
+  .section-title-en{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:clamp(20px,2vw,26px);
+    color:var(--silver);
+    letter-spacing:.18em;
+  }
+  .section-rule{
+    margin-left:auto;
+    flex:1;min-width:80px;
+    height:1px;
+    background:linear-gradient(90deg,var(--hairline),transparent);
+  }
+
+  /* fade-in on scroll */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 1.2s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal-stagger > *{opacity:0;transform:translateY(28px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1)}
+  .reveal-stagger.in > *{opacity:1;transform:none}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:.1s}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:.2s}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:.3s}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:.4s}
+  .reveal-stagger.in > *:nth-child(6){transition-delay:.5s}
+
+  /* ============================================================
+     ABOUT
+     ============================================================ */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:64px;
+    align-items:start;
+  }
+  @media(max-width:900px){
+    .about-grid{grid-template-columns:1fr;gap:48px}
+  }
+  .about-prose-jp{
+    font-family:var(--serif-jp);
+    font-size:17px;
+    line-height:2.0;
+    letter-spacing:.03em;
+    color:var(--text);
+  }
+  .about-prose-jp p + p{margin-top:22px}
+  .about-prose-en{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:16px;
+    line-height:1.85;
+    color:var(--text-dim);
+    letter-spacing:.04em;
+    border-left:1px solid var(--hairline-strong);
+    padding-left:28px;
+    text-wrap:pretty;
+  }
+  .about-prose-en p + p{margin-top:18px}
+  .pull-jp{
+    display:block;
+    font-size:22px;
+    color:var(--gold-warm);
+    line-height:1.7;
+    margin-bottom:16px;
+    letter-spacing:.03em;
+  }
+
+  .tags{
+    margin-top:64px;
+    display:flex;flex-wrap:wrap;gap:12px;
+  }
+  .tag{
+    font-family:var(--sans-jp);
+    font-size:13px;
+    letter-spacing:.1em;
+    padding:10px 18px;
+    border:1px solid var(--hairline-strong);
+    border-radius:999px;
+    color:var(--text-dim);
+    background:rgba(238,240,247,.02);
+    transition:all .4s;
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .tag::before{
+    content:""; width:5px;height:5px;border-radius:50%;
+    background:var(--silver-dim);
+  }
+  .tag:hover{
+    color:var(--text);
+    border-color:var(--silver-dim);
+    background:rgba(91,77,138,.15);
+    transform:translateY(-2px);
+  }
+  .tag:hover::before{background:var(--gold)}
+
+  .suno-badge{
+    margin-top:48px;
+    display:inline-flex;align-items:center;gap:14px;
+    padding:14px 22px;
+    border:1px solid var(--hairline-strong);
+    background:rgba(45,125,122,.06);
+    font-family:var(--sans-en);
+    font-size:11px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--silver-dim);
+    border-radius:2px;
+  }
+  .suno-badge .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 12px var(--teal);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:.6;transform:scale(1)}
+    50%{opacity:1;transform:scale(1.4)}
+  }
+
+  /* ============================================================
+     FEATURED TRACKS
+     ============================================================ */
+  .tracks{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:48px;
+  }
+  .tracks .track:nth-child(5){
+    grid-column:1 / -1;
+  }
+  @media(max-width:900px){
+    .tracks{grid-template-columns:1fr;gap:40px}
+    .tracks .track:nth-child(5){grid-column:auto}
+  }
+
+  .track{
+    position:relative;
+  }
+  .track-frame{
+    position:relative;
+    aspect-ratio:16/9;
+    border-radius:2px;
+    overflow:hidden;
+    background:#000;
+    border:1px solid var(--hairline);
+    transition:all .5s;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.7);
+  }
+  .track:hover .track-frame{
+    border-color:var(--silver-dim);
+    box-shadow:
+      0 0 0 1px var(--gold-warm),
+      0 0 80px -10px rgba(201,168,76,.25),
+      0 30px 60px -20px rgba(0,0,0,.8);
+  }
+  .track-frame iframe{
+    width:100%;height:100%;border:0;display:block;
+  }
+  .track-num{
+    display:block;
+    margin-bottom:14px;
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-size:18px;
+    color:var(--gold);
+    letter-spacing:.24em;
+  }
+  .track-meta{
+    margin-top:22px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .track-title-jp{
+    font-family:var(--serif-jp);
+    font-size:22px;
+    font-weight:500;
+    letter-spacing:.06em;
+    line-height:1.4;
+  }
+  .track-title-en{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:16px;
+    color:var(--silver);
+    letter-spacing:.08em;
+  }
+  .track-desc{
+    margin-top:10px;
+    font-family:var(--serif-jp);
+    font-size:14px;
+    line-height:1.9;
+    color:var(--text-dim);
+    letter-spacing:.04em;
+    max-width:62ch;
+  }
+  .track-desc::before{
+    content:"「"; color:var(--gold); margin-right:2px;
+  }
+  .track-desc::after{
+    content:"」"; color:var(--gold); margin-left:2px;
+  }
+
+  /* ============================================================
+     MOOD SECTION
+     ============================================================ */
+  .mood-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+  }
+  @media(max-width:980px){
+    .mood-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:600px){
+    .mood-grid{grid-template-columns:1fr}
+  }
+
+  .mood{
+    position:relative;
+    display:block;
+    padding:36px 30px 32px;
+    border:1px solid var(--hairline);
+    background:
+      linear-gradient(180deg, rgba(91,77,138,.06), rgba(8,12,24,.4));
+    border-radius:2px;
+    overflow:hidden;
+    transition:all .5s cubic-bezier(.2,.7,.2,1);
+    min-height:200px;
+    display:flex;flex-direction:column;justify-content:space-between;gap:24px;
+  }
+  .mood::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 80% 0%, rgba(201,168,76,.12), transparent 50%);
+    opacity:0;transition:opacity .6s;
+  }
+  .mood:hover{
+    border-color:var(--silver-dim);
+    transform:translateY(-4px);
+    box-shadow:0 30px 50px -25px rgba(0,0,0,.6);
+  }
+  .mood:hover::before{opacity:1}
+  .mood-icon{
+    width:46px;height:46px;
+    border-radius:50%;
+    background:rgba(238,240,247,.04);
+    border:1px solid var(--hairline-strong);
+    display:grid;place-items:center;
+    font-size:20px;
+    transition:all .5s;
+  }
+  .mood:hover .mood-icon{
+    border-color:var(--gold);
+    background:rgba(201,168,76,.08);
+    box-shadow:0 0 24px rgba(201,168,76,.25);
+  }
+  .mood-text{
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .mood-jp{
+    font-family:var(--serif-jp);
+    font-size:18px;
+    font-weight:500;
+    letter-spacing:.08em;
+    line-height:1.5;
+  }
+  .mood-en{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:15px;
+    color:var(--silver-dim);
+    letter-spacing:.06em;
+  }
+  .mood-arrow{
+    position:absolute;
+    bottom:28px;right:28px;
+    font-family:var(--serif-en);
+    font-size:13px;
+    letter-spacing:.24em;
+    color:var(--text-faint);
+    transition:all .5s;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .mood:hover .mood-arrow{
+    color:var(--gold-warm);
+    transform:translateX(4px);
+  }
+
+  /* ============================================================
+     FINAL CTA
+     ============================================================ */
+  .cta-block{
+    position:relative;
+    margin:80px auto 120px;
+    max-width:1100px;
+    padding:120px 40px;
+    text-align:center;
+    border-top:1px solid var(--hairline);
+    border-bottom:1px solid var(--hairline);
+    overflow:hidden;
+  }
+  .cta-block::before{
+    content:"";
+    position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(ellipse at 50% 50%, rgba(91,77,138,.18), transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(201,168,76,.08), transparent 70%);
+  }
+  .cta-block > *{position:relative;z-index:1}
+
+  .cta-eyebrow{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    color:var(--gold);
+    font-size:18px;
+    letter-spacing:.3em;
+    margin-bottom:24px;
+  }
+  .cta-title-jp{
+    font-family:var(--serif-jp);
+    font-weight:500;
+    font-size:clamp(40px,5vw,64px);
+    letter-spacing:.14em;
+    line-height:1.2;
+    margin-bottom:14px;
+  }
+  .cta-title-en{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:clamp(18px,2vw,24px);
+    color:var(--silver);
+    letter-spacing:.18em;
+  }
+  .cta-body{
+    margin:48px auto 0;
+    max-width:620px;
+    font-family:var(--serif-jp);
+    font-size:17px;
+    line-height:2.1;
+    letter-spacing:.06em;
+    color:var(--text);
+  }
+  .cta-body-en{
+    margin:18px auto 0;
+    max-width:620px;
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:300;
+    font-size:16px;
+    color:var(--text-dim);
+    letter-spacing:.05em;
+  }
+  .cta-buttons{
+    margin-top:56px;
+    display:flex;flex-wrap:wrap;justify-content:center;gap:18px;
+  }
+  .cta-meta{
+    margin-top:42px;
+    font-family:var(--sans-en);
+    font-size:11px;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    display:flex;justify-content:center;gap:24px;flex-wrap:wrap;
+  }
+  .cta-meta span{display:inline-flex;align-items:center;gap:10px}
+  .cta-meta span::before{
+    content:""; width:4px;height:4px;border-radius:50%;
+    background:var(--gold);
+  }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer{
+    border-top:1px solid var(--hairline);
+    padding:60px 40px;
+    max-width:1280px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr;
+    gap:48px;
+    align-items:start;
+  }
+  @media(max-width:780px){
+    footer{grid-template-columns:1fr;gap:32px;padding:48px 22px}
+  }
+  .footer-brand{
+    font-family:var(--serif-jp);
+    font-size:24px;
+    letter-spacing:.22em;
+    margin-bottom:14px;
+  }
+  .footer-tag{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-size:14px;
+    color:var(--silver-dim);
+    letter-spacing:.14em;
+  }
+  .footer-h{
+    font-family:var(--sans-en);
+    font-size:11px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:14px;
+  }
+  .footer-link{
+    display:block;
+    font-family:var(--serif-jp);
+    font-size:14px;
+    color:var(--text-dim);
+    padding:6px 0;
+    transition:color .3s;
+    letter-spacing:.06em;
+  }
+  .footer-link:hover{color:var(--gold-warm)}
+  .footer-bottom{
+    border-top:1px solid var(--hairline);
+    padding:28px 40px 60px;
+    max-width:1280px;
+    margin:0 auto;
+    display:flex;justify-content:space-between;
+    flex-wrap:wrap;gap:14px;
+    font-family:var(--sans-en);
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+  }
+  @media(max-width:780px){
+    .footer-bottom{padding:24px 22px 48px}
+  }
+
+  /* selection */
+  ::selection{background:var(--gold);color:#1a1408}
+
+  /* ============================================================
+     Japanese typography — phrase-aware line breaking
+     `word-break: auto-phrase` (Chromium 119+) breaks at clause
+     boundaries; falls back gracefully on Safari/Firefox.
+     ============================================================ */
+  .jp,
+  .hero-title,
+  .hero-tagline,
+  .section-title-jp,
+  .about-prose-jp,
+  .about-prose-jp p,
+  .pull-jp,
+  .tag,
+  .track-title-jp,
+  .track-desc,
+  .mood-jp,
+  .cta-title-jp,
+  .cta-body,
+  .platforms-title,
+  .tracks-bridge-text,
+  .footer-brand,
+  .footer-link{
+    line-break:strict;
+    text-wrap:pretty;
+    word-break:auto-phrase;
+    overflow-wrap:break-word;
+    hanging-punctuation:allow-end;
+  }
+  /* Pull-quote style headings get balance for nicer top line */
+  .hero-title,
+  .section-title-jp,
+  .cta-title-jp,
+  .platforms-title{
+    text-wrap:balance;
+  }
+
+  /* respect reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  }
+
+  /* ============================================================
+     MOBILE polish (≤ 560px)
+     ============================================================ */
+  @media (max-width:560px){
+    .nav{padding:14px 16px}
+    .nav-brand{font-size:13px;letter-spacing:.1em;gap:8px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .nav-brand > span:last-child{overflow:hidden;text-overflow:ellipsis}
+    .brand-mark{width:24px;height:24px;flex:none}
+
+    .hero{padding:110px 18px 72px;min-height:92vh}
+    .hero-tag{font-size:10px;letter-spacing:.32em;margin-bottom:24px}
+    .hero-tag::before,.hero-tag::after{width:24px}
+    .hero-title{font-size:54px;letter-spacing:.06em}
+    .hero-en{font-size:15px;letter-spacing:.18em;margin-top:12px}
+    .hero-divider{margin:32px auto 26px;height:48px}
+    .hero-tagline{font-size:15px;letter-spacing:.08em;padding:0 4px}
+    .hero-tagline-en{font-size:12px;letter-spacing:.1em}
+    .hero-cta-wrap{margin-top:40px}
+    .btn{padding:16px 28px;font-size:13px;letter-spacing:.16em}
+    .moon{top:8%;right:-8%;width:60vw}
+    .scroll-cue{display:none}
+
+    section.block{padding:80px 18px}
+    .section-head{margin-bottom:48px;gap:14px}
+    .section-rule{display:none}
+    .section-num{font-size:14px}
+    .section-title-jp{font-size:30px;letter-spacing:.08em}
+    .section-title-en{font-size:16px;letter-spacing:.12em}
+
+    .pull-jp{font-size:19px;line-height:1.6}
+    .about-prose-jp{font-size:16px;line-height:1.95}
+    .about-prose-en{font-size:15px;padding-left:20px;line-height:1.8}
+    .tags{margin-top:40px;gap:8px}
+    .tag{font-size:12px;padding:8px 14px}
+    .suno-badge{margin-top:32px;padding:12px 18px;font-size:10px;letter-spacing:.22em}
+
+    .tracks{gap:36px}
+    .track-num{font-size:15px;margin-bottom:10px}
+    .track-title-jp{font-size:18px}
+    .track-title-en{font-size:14px}
+    .track-desc{font-size:13px;line-height:1.85}
+    .tracks-bridge{margin-top:48px;padding-top:28px}
+    .tracks-bridge-text{font-size:14px;line-height:1.95}
+
+    .mood{padding:28px 22px 26px;min-height:auto}
+    .mood-icon{width:40px;height:40px;font-size:18px}
+    .mood-jp{font-size:16px}
+    .mood-en{font-size:13px}
+    .mood-arrow{bottom:24px;right:22px;font-size:11px;letter-spacing:.18em}
+
+    .cta-block{margin:48px auto 80px;padding:72px 22px}
+    .cta-eyebrow{font-size:14px;letter-spacing:.22em;margin-bottom:16px}
+    .cta-title-jp{font-size:34px;letter-spacing:.08em}
+    .cta-title-en{font-size:16px;letter-spacing:.12em}
+    .cta-body{font-size:14px;line-height:1.95;margin-top:32px}
+    .cta-body-en{font-size:13px;margin-top:14px}
+    .cta-buttons{margin-top:36px;flex-direction:column;align-items:stretch;gap:12px}
+    .cta-buttons .btn{justify-content:center}
+    .cta-meta{margin-top:30px;font-size:10px;letter-spacing:.22em;gap:14px}
+
+    .platforms{margin-top:48px;padding:36px 22px}
+    .platforms-eyebrow{font-size:10px;letter-spacing:.28em}
+    .platforms-title{font-size:18px;letter-spacing:.06em}
+    .platforms-title-en{font-size:13px;letter-spacing:.08em}
+    .platforms-list{gap:8px 10px;margin-top:24px}
+    .platform-pill{font-size:11px;padding:8px 12px;letter-spacing:.12em}
+    .platforms-footnote{font-size:11px;margin-top:18px}
+
+    footer{padding:40px 18px;gap:28px}
+    .footer-brand{font-size:20px}
+    .footer-bottom{padding:20px 18px 36px;font-size:10px;letter-spacing:.16em}
+  }
+
+  /* very small phones (≤ 380px) */
+  @media (max-width:380px){
+    .hero-title{font-size:48px}
+    .section-title-jp{font-size:26px}
+    .cta-title-jp{font-size:30px}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ============== NAV ============== -->
+  <nav class="nav" id="nav">
+    <a href="#top" class="nav-brand" aria-label="余白のうた">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <!-- outer halo ring -->
+        <circle class="halo" cx="20" cy="18" r="15"/>
+        <!-- crescent moon: a full disk minus an offset disk -->
+        <defs>
+          <mask id="bm-crescent">
+            <rect width="40" height="40" fill="black"/>
+            <circle cx="20" cy="18" r="10.5" fill="white"/>
+            <circle cx="24.5" cy="15" r="9.5" fill="black"/>
+          </mask>
+        </defs>
+        <rect width="40" height="40" fill="var(--silver)" opacity=".88" mask="url(#bm-crescent)"/>
+        <!-- subtle moon outline ring -->
+        <circle class="moonbody" cx="20" cy="18" r="10.5" opacity=".25"/>
+        <!-- water surface lines -->
+        <line class="water" x1="6" y1="32" x2="34" y2="32"/>
+        <line class="water-soft" x1="10" y1="35" x2="30" y2="35"/>
+        <!-- moon's reflection in water (tiny dashed crescent echo) -->
+        <path class="water-soft" d="M16 33.5 q4 1.5 8 0" stroke-dasharray="1.2 1.6"/>
+        <!-- gold ember (moon's afterglow) -->
+        <circle class="ember" cx="30.5" cy="10" r="1.05"/>
+        <circle class="ember-soft" cx="9" cy="13" r=".55"/>
+      </svg>
+      <span>余白のうた</span>
+    </a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#tracks">Tracks</a>
+      <a href="#mood">Mood</a>
+      <a href="#listen">Listen</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="navOverlay">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </nav>
+
+  <!-- ============== MOBILE OVERLAY MENU ============== -->
+  <div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="ナビゲーション">
+    <nav class="nav-overlay-list">
+      <a class="nav-overlay-link" href="#about">余白のうたについて<small>About</small></a>
+      <a class="nav-overlay-link" href="#tracks">注目の楽曲<small>Featured Tracks</small></a>
+      <a class="nav-overlay-link" href="#mood">シーンで選ぶ<small>Find Your Mood</small></a>
+      <a class="nav-overlay-link" href="#listen">チャンネルへ<small>Visit the Channel</small></a>
+    </nav>
+    <div class="nav-overlay-rule"></div>
+    <div class="nav-overlay-cta">
+      <a class="btn btn-primary" data-link="spotify">
+        <span>Spotify で聴く</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="btn btn-ghost" data-link="youtube">
+        <span>YouTube を見る</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============== HERO ============== -->
+  <section class="hero" id="top" data-screen-label="01 Hero">
+    <canvas id="stars"></canvas>
+    <div class="moon" aria-hidden="true"></div>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="horizon" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-tag">A YouTube Music Channel</div>
+
+      <h1 class="hero-title" id="heroTitle" aria-label="余白のうた"></h1>
+      <div class="hero-en">Yohaku &nbsp;no&nbsp; Uta</div>
+
+      <div class="hero-divider"></div>
+
+      <p class="hero-tagline">気分、景色、感情から生まれた音楽を、ここに。</p>
+      <p class="hero-tagline-en">Music born from moods, landscapes, and emotions.</p>
+
+      <div class="hero-cta-wrap">
+        <a class="btn btn-primary" data-link="youtube">
+          <span>YouTubeで聴く</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <p style="margin-top:18px;font-family:var(--sans-en);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--text-faint)">Also on Spotify · Apple Music · 150+ services</p>
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <!-- ============== ABOUT ============== -->
+  <section class="block" id="about" data-screen-label="02 About">
+    <div class="section-head reveal">
+      <span class="section-num">01 — </span>
+      <div>
+        <div class="section-title-jp">余白のうたについて</div>
+        <div class="section-title-en">About the channel</div>
+      </div>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-prose-jp reveal">
+        <span class="pull-jp">好きな音楽を、<wbr>自由に形にしているチャンネルです。</span>
+        <p>気分、景色、感情から生まれた<wbr>インスト曲やボーカル曲を投稿しています。夜明け前の静寂、月の残光、水の記憶、<wbr>封印された感情の覚醒——そんな目に見えない気配を、<wbr>音の余白に閉じ込めるように作っています。</p>
+        <p>美しく切なく、荘厳で透明感のある<wbr>一夜のサウンドトラック。<wbr>あなたの「間」に、そっと寄り添えますように。</p>
+      </div>
+
+      <div class="about-prose-en reveal">
+        <p>A channel where music is shaped freely — from moods, landscapes, and emotions.</p>
+        <p>Instrumental &amp; vocal original songs created with the silence before dawn, the afterglow of the moon, the memory of water, and the awakening of sealed feelings.</p>
+        <p>Cinematic, fragile, luminous. Made for the quiet hours of the night.</p>
+      </div>
+    </div>
+
+    <div class="tags reveal-stagger">
+      <span class="tag">和風ダークファンタジー</span>
+      <span class="tag">シネマティックロック</span>
+      <span class="tag">アニメ OP / ED スタイル</span>
+      <span class="tag">ファンタジーワルツ</span>
+      <span class="tag">作業用 BGM</span>
+      <span class="tag">Instrumental &amp; Vocal</span>
+    </div>
+
+    <div class="reveal">
+      <span class="suno-badge">
+        <span class="dot"></span>
+        Music created with Suno&nbsp;AI
+      </span>
+    </div>
+  </section>
+
+  <!-- ============== FEATURED TRACKS ============== -->
+  <section class="block" id="tracks" data-screen-label="03 Featured Tracks">
+    <div class="section-head reveal">
+      <span class="section-num">02 — </span>
+      <div>
+        <div class="section-title-jp">注目の楽曲</div>
+        <div class="section-title-en">Featured tracks</div>
+      </div>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="tracks">
+      <article class="track reveal">
+        <div class="track-num">— 01</div>
+        <div class="track-frame">
+          <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/IuOy5bTQE64" title="Arrebato - instrumental" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <div class="track-meta">
+          <h3 class="track-title-jp">Arrebato</h3>
+          <div class="track-title-en">Instrumental</div>
+          <p class="track-desc">封印された記憶が、魂の共鳴で目覚める。</p>
+        </div>
+      </article>
+
+      <article class="track reveal">
+        <div class="track-num">— 02</div>
+        <div class="track-frame">
+          <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/jmMVLMmlQCU" title="暁の憧憬 - Dawn's Longing" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <div class="track-meta">
+          <h3 class="track-title-jp">暁の憧憬</h3>
+          <div class="track-title-en">Dawn's Longing</div>
+          <p class="track-desc">夜明け前の切なさ、報われない願い、それでも進む心。</p>
+        </div>
+      </article>
+
+      <article class="track reveal">
+        <div class="track-num">— 03</div>
+        <div class="track-frame">
+          <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/kid7bCkjEbs" title="木洩れ風の空洞 - Hollow of Luminous Grain" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <div class="track-meta">
+          <h3 class="track-title-jp">木洩れ風の空洞</h3>
+          <div class="track-title-en">Hollow of Luminous Grain</div>
+          <p class="track-desc">月の残光、水の記憶、胸の奥に残る静かな響き。</p>
+        </div>
+      </article>
+
+      <article class="track reveal">
+        <div class="track-num">— 04</div>
+        <div class="track-frame">
+          <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/MINLi4Of0XA" title="憎愛ベネディクション - Vocal Version" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <div class="track-meta">
+          <h3 class="track-title-jp">憎愛ベネディクション</h3>
+          <div class="track-title-en">Vocal Version</div>
+          <p class="track-desc">相反する感情が交差する、シネマティックな祈り。</p>
+        </div>
+      </article>
+
+      <article class="track reveal">
+        <div class="track-num">— 05</div>
+        <div class="track-frame">
+          <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/BAssY2b2Ot0" title="作業用BGM 幻想的で疾走感のあるインスト曲集 Vol.1" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <div class="track-meta">
+          <h3 class="track-title-jp">【作業用BGM】幻想的で疾走感のあるインスト曲集 Vol.1</h3>
+          <div class="track-title-en">Cinematic Fantasy BGM Collection — Vol. 1</div>
+          <p class="track-desc">集中したい夜のための、約30分のファンタジーBGM集。</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="tracks-bridge reveal">
+      <p class="tracks-bridge-text">気に入った曲は、<a class="accent" data-link="spotify">Spotify</a> や <a class="accent" data-link="appleMusic">Apple Music</a> で<wbr>フル尺・オフライン再生も。<br/>プレイリストに追加すれば、<wbr>夜の作業も眠る前のひとときも、<wbr>いつもの一曲に。</p>
+      <p class="tracks-bridge-en">Add to your library on Spotify, Apple Music &amp; more — for the moments words can&rsquo;t reach.</p>
+    </div>
+  </section>
+
+  <!-- ============== MOOD ============== -->
+  <section class="block" id="mood" data-screen-label="04 Find Your Mood">
+    <div class="section-head reveal">
+      <span class="section-num">03 — </span>
+      <div>
+        <div class="section-title-jp">シーンで選ぶ</div>
+        <div class="section-title-en">Find your mood</div>
+      </div>
+      <div class="section-rule"></div>
+    </div>
+
+    <p style="margin:-32px 0 56px;font-family:var(--serif-en);font-style:italic;font-weight:300;font-size:15px;color:var(--silver-dim);letter-spacing:.06em;text-wrap:pretty">— プレイリストに加えれば、<wbr>その瞬間のサウンドトラックに。<br/>Tap a scene to open on Spotify.</p>
+
+    <div class="mood-grid reveal-stagger">
+      <a class="mood" data-link="spotify">
+        <div class="mood-icon">🌙</div>
+        <div class="mood-text">
+          <div class="mood-jp">夜の作業・勉強に</div>
+          <div class="mood-en">Night Study &amp; Work</div>
+        </div>
+        <div class="mood-arrow">Spotify →</div>
+      </a>
+      <a class="mood" data-link="spotify">
+        <div class="mood-icon">✍︎</div>
+        <div class="mood-text">
+          <div class="mood-jp">創作・執筆のお供に</div>
+          <div class="mood-en">Creative Writing</div>
+        </div>
+        <div class="mood-arrow">Spotify →</div>
+      </a>
+      <a class="mood" data-link="spotify">
+        <div class="mood-icon">📖</div>
+        <div class="mood-text">
+          <div class="mood-jp">読書・思考の時間に</div>
+          <div class="mood-en">Reading &amp; Thinking</div>
+        </div>
+        <div class="mood-arrow">Spotify →</div>
+      </a>
+      <a class="mood" data-link="spotify">
+        <div class="mood-icon">⚔︎</div>
+        <div class="mood-text">
+          <div class="mood-jp">ゲーム・世界観に浸りたい時</div>
+          <div class="mood-en">Gaming &amp; Fantasy</div>
+        </div>
+        <div class="mood-arrow">Spotify →</div>
+      </a>
+      <a class="mood" data-link="spotify">
+        <div class="mood-icon">☾</div>
+        <div class="mood-text">
+          <div class="mood-jp">眠る前の静けさに</div>
+          <div class="mood-en">Before Sleep</div>
+        </div>
+        <div class="mood-arrow">Spotify →</div>
+      </a>
+      <a class="mood" data-link="spotify">
+        <div class="mood-icon">✦</div>
+        <div class="mood-text">
+          <div class="mood-jp">世界中のリスナーへ</div>
+          <div class="mood-en">Cinematic &amp; Fantasy for Global Listeners</div>
+        </div>
+        <div class="mood-arrow">Spotify →</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============== FINAL CTA ============== -->
+  <section class="block" id="listen" data-screen-label="05 Visit the Channel">
+    <div class="cta-block reveal">
+      <div class="cta-eyebrow">— 04 —</div>
+      <h2 class="cta-title-jp">チャンネルへ</h2>
+      <div class="cta-title-en">Visit the channel</div>
+
+      <p class="cta-body">インスト曲・ボーカル曲、<wbr>合わせて 40 本以上。<br />あなたの時間に合う一曲が、<wbr>きっとあります。</p>
+      <p class="cta-body-en">Over 40 original tracks — instrumental &amp; vocal.<br/>Find the one that fits your moment.</p>
+
+      <div class="cta-buttons">
+        <a class="btn btn-primary" data-link="spotify">
+          <span>Spotify でフォロー</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" data-link="appleMusic">
+          <span>Apple Music で聴く</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" data-link="youtube">
+          <span>YouTube で見る</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="cta-meta">
+        <span>40+ Tracks</span>
+        <span>Instrumental &amp; Vocal</span>
+        <span>JP / EN</span>
+      </div>
+
+      <!-- Streaming platforms -->
+      <div class="platforms reveal">
+        <div class="platforms-eyebrow">Listen anywhere</div>
+        <div class="platforms-title">主要ストリーミングサービスでも聴けます。</div>
+        <div class="platforms-title-en">Available on Spotify, Apple Music, TikTok &amp; more.</div>
+
+        <div class="platforms-list">
+          <a class="platform-pill" data-link="spotify">Spotify</a>
+          <a class="platform-pill" data-link="appleMusic">Apple Music</a>
+          <a class="platform-pill" data-link="appleMusic">iTunes</a>
+          <a class="platform-pill" data-link="tiktok">TikTok</a>
+          <a class="platform-pill" data-link="youtubeMusic">YouTube Music</a>
+          <a class="platform-pill" data-link="amazonMusic">Amazon Music</a>
+          <a class="platform-pill" data-link="deezer">Deezer</a>
+          <a class="platform-pill" data-link="tidal">Tidal</a>
+          <a class="platform-pill" data-link="pandora">Pandora</a>
+          <a class="platform-pill" data-link="instagram">Instagram / Reels</a>
+          <span class="platform-pill more">+ 150 services</span>
+        </div>
+
+        <div class="platforms-footnote">Distributed worldwide via DistroKid &mdash; レコードショップで「余白のうた / Yohaku no Uta」で検索</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== FOOTER ============== -->
+  <footer>
+    <div>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:10px">
+        <svg class="brand-mark lg" viewBox="0 0 40 40" aria-hidden="true">
+          <circle class="halo" cx="20" cy="18" r="15"/>
+          <defs>
+            <mask id="bm-crescent-2">
+              <rect width="40" height="40" fill="black"/>
+              <circle cx="20" cy="18" r="10.5" fill="white"/>
+              <circle cx="24.5" cy="15" r="9.5" fill="black"/>
+            </mask>
+          </defs>
+          <rect width="40" height="40" fill="var(--silver)" opacity=".88" mask="url(#bm-crescent-2)"/>
+          <circle class="moonbody" cx="20" cy="18" r="10.5" opacity=".25"/>
+          <line class="water" x1="6" y1="32" x2="34" y2="32"/>
+          <line class="water-soft" x1="10" y1="35" x2="30" y2="35"/>
+          <path class="water-soft" d="M16 33.5 q4 1.5 8 0" stroke-dasharray="1.2 1.6"/>
+          <circle class="ember" cx="30.5" cy="10" r="1.05"/>
+          <circle class="ember-soft" cx="9" cy="13" r=".55"/>
+        </svg>
+        <div class="footer-brand" style="margin:0">余白のうた</div>
+      </div>
+      <div class="footer-tag">Yohaku no Uta — Music for the quiet hours.</div>
+    </div>
+    <div>
+      <div class="footer-h">Listen</div>
+      <a class="footer-link" data-link="spotify">Spotify ↗</a>
+      <a class="footer-link" data-link="appleMusic">Apple Music ↗</a>
+      <a class="footer-link" data-link="youtube">YouTube ↗</a>
+      <a class="footer-link" data-link="tiktok">TikTok ↗</a>
+    </div>
+    <div>
+      <div class="footer-h">Channel</div>
+      <a class="footer-link" href="#about">About</a>
+      <a class="footer-link" href="#listen">Visit Channel</a>
+      <span class="footer-link" style="color:var(--text-faint)">Music created with Suno AI</span>
+    </div>
+  </footer>
+
+  <div class="footer-bottom">
+    <div>© 2026 余白のうた / Yohaku no Uta</div>
+    <div>All tracks composed with Suno AI</div>
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   LINK CONFIG — edit here to swap in your real artist URLs.
+   When DistroKid finishes propagating to each platform, paste
+   the actual artist page URL in place of the search URL.
+   ========================================================= */
+const LINKS = {
+  // YouTube — properly URL-encoded handle (ナナシー -> %E3%83%8A%E3%83%8A%E3%82%B7%E3%83%BC)
+  youtube:      'https://www.youtube.com/@%E3%83%8A%E3%83%8A%E3%82%B7%E3%83%BC-e1k',
+  // Streaming — replace search URLs with artist page URLs once live
+  spotify:      'https://open.spotify.com/search/Yohaku%20no%20Uta',
+  appleMusic:   'https://music.apple.com/search?term=Yohaku%20no%20Uta',
+  youtubeMusic: 'https://music.youtube.com/search?q=Yohaku+no+Uta',
+  amazonMusic:  'https://music.amazon.com/search/Yohaku+no+Uta',
+  deezer:       'https://www.deezer.com/search/Yohaku%20no%20Uta',
+  tidal:        'https://tidal.com/search?q=Yohaku%20no%20Uta',
+  pandora:      'https://www.pandora.com/search/Yohaku%20no%20Uta',
+  tiktok:       'https://www.tiktok.com/search?q=Yohaku%20no%20Uta',
+  instagram:    'https://www.instagram.com/explore/search/keyword/?q=yohaku%20no%20uta',
+};
+
+(function injectLinks(){
+  document.querySelectorAll('[data-link]').forEach(el => {
+    const k = el.getAttribute('data-link');
+    if(LINKS[k]){
+      el.setAttribute('href', LINKS[k]);
+      if(!el.getAttribute('target')) el.setAttribute('target','_blank');
+      if(!el.getAttribute('rel'))    el.setAttribute('rel','noopener noreferrer');
+    }
+  });
+
+  /* Robust click handler: forces a real navigation even when an
+     embedding context strips target="_blank" (e.g. sandboxed iframes).
+     1) try popup → 2) navigate top frame → 3) fall back to current frame. */
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-link]');
+    if(!a) return;
+    const url = a.href;
+    if(!url) return;
+    // Let the browser handle modifier-key clicks normally.
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    let popup = null;
+    try { popup = window.open(url, '_blank', 'noopener,noreferrer'); } catch(_){}
+    if(popup && !popup.closed) return;
+    // Popup blocked — try escaping the iframe.
+    try { window.top.location.href = url; return; } catch(_){}
+    // Last resort.
+    window.location.href = url;
+  });
+})();
+
+/* =========================================================
+   Mobile menu (hamburger) toggle
+   ========================================================= */
+(function(){
+  const toggle = document.getElementById('navToggle');
+  const overlay = document.getElementById('navOverlay');
+  if(!toggle || !overlay) return;
+  const open = () => {
+    document.body.classList.add('menu-open');
+    toggle.setAttribute('aria-expanded','true');
+    toggle.setAttribute('aria-label','メニューを閉じる');
+  };
+  const close = () => {
+    document.body.classList.remove('menu-open');
+    toggle.setAttribute('aria-expanded','false');
+    toggle.setAttribute('aria-label','メニューを開く');
+  };
+  toggle.addEventListener('click', () => {
+    document.body.classList.contains('menu-open') ? close() : open();
+  });
+  // Close when an in-page anchor is tapped
+  overlay.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => setTimeout(close, 50));
+  });
+  // Close on Escape
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
+})();
+
+/* =========================================================
+   Hero title — animate per character
+   ========================================================= */
+(function(){
+  const el = document.getElementById('heroTitle');
+  if(!el) return;
+  const text = '余白のうた';
+  el.innerHTML = '';
+  [...text].forEach((ch,i)=>{
+    const s = document.createElement('span');
+    s.className = 'char';
+    s.textContent = ch;
+    s.style.animationDelay = (0.08 + i*0.12) + 's';
+    el.appendChild(s);
+  });
+})();
+
+/* =========================================================
+   Starfield canvas — twinkling + slow drift
+   ========================================================= */
+(function(){
+  const canvas = document.getElementById('stars');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w=0,h=0,dpr=Math.min(window.devicePixelRatio||1,2);
+  let stars=[];
+
+  function resize(){
+    const rect = canvas.getBoundingClientRect();
+    w = rect.width; h = rect.height;
+    canvas.width = w*dpr; canvas.height = h*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    seed();
+  }
+
+  function seed(){
+    const count = Math.floor((w*h)/3500);
+    stars = new Array(count).fill(0).map(()=>({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      r: Math.random()*1.4 + 0.2,
+      a: Math.random()*0.6 + 0.2,
+      tw: Math.random()*0.02 + 0.005,
+      ph: Math.random()*Math.PI*2,
+      vy: Math.random()*0.04 + 0.005,
+      hue: Math.random() < 0.18 ? 'gold' : (Math.random() < 0.3 ? 'indigo' : 'silver')
+    }));
+  }
+
+  const palette = {
+    silver: '238,240,247',
+    gold: '230,197,116',
+    indigo: '170,160,210'
+  };
+
+  function draw(t){
+    ctx.clearRect(0,0,w,h);
+    for(const s of stars){
+      s.ph += s.tw;
+      s.y += s.vy;
+      if(s.y > h+2){ s.y = -2; s.x = Math.random()*w; }
+      const alpha = s.a * (0.55 + 0.45*Math.sin(s.ph));
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${palette[s.hue]},${alpha})`;
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fill();
+      // soft halo for the brighter ones
+      if(s.r > 1){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${palette[s.hue]},${alpha*0.12})`;
+        ctx.arc(s.x,s.y,s.r*4,0,Math.PI*2);
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  // shooting star occasionally
+  function shootingStar(){
+    const startX = Math.random()*w;
+    const startY = Math.random()*h*0.4;
+    const len = 120 + Math.random()*120;
+    const angle = Math.PI*0.18 + Math.random()*0.1;
+    const dur = 900;
+    const t0 = performance.now();
+    function frame(now){
+      const p = (now-t0)/dur;
+      if(p>1) return;
+      const x = startX + Math.cos(angle)*len*p;
+      const y = startY + Math.sin(angle)*len*p;
+      const tailLen = 60*(1-Math.abs(0.5-p)*2);
+      const grd = ctx.createLinearGradient(x,y,x-Math.cos(angle)*tailLen,y-Math.sin(angle)*tailLen);
+      grd.addColorStop(0,'rgba(238,240,247,0.9)');
+      grd.addColorStop(1,'rgba(238,240,247,0)');
+      ctx.strokeStyle = grd;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(x,y);
+      ctx.lineTo(x-Math.cos(angle)*tailLen,y-Math.sin(angle)*tailLen);
+      ctx.stroke();
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  setInterval(()=>{ if(Math.random()<0.7) shootingStar(); }, 6500);
+
+  window.addEventListener('resize',resize);
+  resize();
+  requestAnimationFrame(draw);
+})();
+
+/* =========================================================
+   Reveal on scroll
+   ========================================================= */
+(function(){
+  const els = document.querySelectorAll('.reveal, .reveal-stagger');
+  if(!('IntersectionObserver' in window)){
+    els.forEach(e=>e.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    }
+  },{threshold:0.12, rootMargin:'0px 0px -80px 0px'});
+  els.forEach(e=>io.observe(e));
+})();
+
+/* =========================================================
+   Nav scroll state
+   ========================================================= */
+(function(){
+  const nav = document.getElementById('nav');
+  if(!nav) return;
+  const onScroll = ()=> nav.classList.toggle('scrolled', window.scrollY > 24);
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
